@@ -435,7 +435,7 @@ open class CropViewController: UIViewController, TOCropViewControllerDelegate {
     /**
     If true, button icons are visible in portairt instead button text.
 
-    Default is NO. Has no effect on iOS 26 and up, where the toolbar is always icon-only.
+    Default is NO. Has no effect on iOS 26 and up in apps built with the iOS 26 SDK, where the toolbar is always icon-only.
     */
     public var showOnlyIcons: Bool {
         set { toCropViewController.showOnlyIcons = newValue }

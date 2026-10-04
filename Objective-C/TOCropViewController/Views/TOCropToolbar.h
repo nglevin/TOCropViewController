@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* The 'Done' buttons to commit the crop. The text button is displayed
  in portrait mode and the icon one, in landscape.
- The text button is nil on iOS 26 and up, where the toolbar is always icon-only. */
+ The text button is nil on iOS 26 and up in apps built with the iOS 26 SDK, where the toolbar is always icon-only. */
 @property (nullable, nonatomic, strong, readonly) UIButton *doneTextButton;
 @property (nonatomic, strong, readonly) UIButton *doneIconButton;
 @property (nonatomic, copy) NSString *doneTextButtonTitle;
@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* The 'Cancel' buttons to cancel the crop. The text button is displayed
  in portrait mode and the icon one, in landscape.
- The text button is nil on iOS 26 and up, where the toolbar is always icon-only. */
+ The text button is nil on iOS 26 and up in apps built with the iOS 26 SDK, where the toolbar is always icon-only. */
 @property (nullable, nonatomic, strong, readonly) UIButton *cancelTextButton;
 @property (nonatomic, strong, readonly) UIButton *cancelIconButton;
 @property (nonatomic, readonly) UIView *visibleCancelButton;
@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) UIColor *cancelButtonColor;
 
 /* Show the tick and cross buttons instead of 'Done' and 'Cancel'.
- Always YES, and not settable, on iOS 26 and up. */
+ Always YES, and not settable, on iOS 26 and up in apps built with the iOS 26 SDK. */
 @property (nonatomic, assign) BOOL showOnlyIcons API_DEPRECATED("iOS 26 uses icons only", ios(7.0, 18.0));
 
 /* The cropper control buttons */

@@ -278,20 +278,18 @@ static const CGFloat kTOCropViewControllerToolbarHeight = 44.0f;
 #if defined(__IPHONE_26_0)
     if (@available(iOS 26.0, *)) {
       if (!verticalLayout) {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED < 180000
         UIViewLayoutRegion *layoutRegion = [UIViewLayoutRegion safeAreaLayoutRegionWithCornerAdaptation: UIViewLayoutRegionAdaptivityAxisVertical];
         UIEdgeInsets edgeInsets = [self.view edgeInsetsForLayoutRegion:layoutRegion];
         insets.top = edgeInsets.top;
         insets.left = edgeInsets.left;
         insets.bottom = edgeInsets.bottom;
-#endif
       }
     }
 #endif
 
     CGRect frame = CGRectZero;
     if (!verticalLayout) {  // In landscape laying out toolbar to the left
-        if (@available(iOS 26.0, *)) {
+        if (TOCropViewUsesGlassDesign()) {
 #if !TARGET_OS_VISION
             CGFloat minPadding = 8.0f;
 #else
@@ -308,7 +306,7 @@ static const CGFloat kTOCropViewControllerToolbarHeight = 44.0f;
             frame.size.height = CGRectGetHeight(self.view.frame);
         }
     } else {
-        if (@available(iOS 26.0, *)) {
+        if (TOCropViewUsesGlassDesign()) {
             CGRect frameInWindow = [self.view convertRect:self.view.bounds toView:nil];
             BOOL isFullscreen = true;
             if (self.view.window) {
@@ -397,8 +395,8 @@ static const CGFloat kTOCropViewControllerToolbarHeight = 44.0f;
         view = self.parentViewController.view;
     }
 
-    // Always make the crop view edge-to-edge on iOS 26 and up
-    if (@available(iOS 26.0, *)) {
+    // Always make the crop view edge-to-edge with the iOS 26 design
+    if (TOCropViewUsesGlassDesign()) {
         return view.bounds;
     }
 
@@ -452,7 +450,7 @@ static const CGFloat kTOCropViewControllerToolbarHeight = 44.0f;
 - (void)adjustCropViewInsets {
     UIEdgeInsets insets = self.statusBarSafeInsets;
 
-    if (@available(iOS 26.0, *)) {
+    if (TOCropViewUsesGlassDesign()) {
         if (!self.verticalLayout) {
             insets.left = CGRectGetMaxX(self.toolbar.frame);
         } else {

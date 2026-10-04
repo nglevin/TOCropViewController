@@ -309,4 +309,26 @@ static void TOCropRunWhileScrollViewIsDragging(void (^block)(void)) {
     XCTAssertFalse(CGRectIsEmpty(toolbar.doneButtonFrame));
 }
 
+- (void)testToolButtonsSitCentredBetweenCancelAndDone {
+    // Whichever design the toolbar was built with, its layout must agree with it. Laying
+    // out for a glass container that was never built pins the tools to the leading edge.
+    TOCropToolbar *toolbar = [[TOCropToolbar alloc] initWithFrame:(CGRect){0, 0, 375, 44}];
+    [toolbar layoutIfNeeded];
+
+    CGRect cancelFrame = toolbar.visibleCancelButton.frame;
+    CGRect doneFrame = toolbar.doneButtonFrame;
+
+    // The tool buttons may live inside the glass container, so compare in toolbar space
+    UIButton *firstTool = toolbar.rotateCounterclockwiseButton;
+    UIButton *lastTool = toolbar.rotateClockwiseButton;
+    CGRect toolsFrame = CGRectUnion([toolbar convertRect:firstTool.bounds fromView:firstTool],
+                                    [toolbar convertRect:lastTool.bounds fromView:lastTool]);
+
+    XCTAssertGreaterThanOrEqual(CGRectGetMinX(toolsFrame), CGRectGetMaxX(cancelFrame));
+    XCTAssertLessThanOrEqual(CGRectGetMaxX(toolsFrame), CGRectGetMinX(doneFrame));
+
+    CGFloat gapMidX = (CGRectGetMaxX(cancelFrame) + CGRectGetMinX(doneFrame)) * 0.5f;
+    XCTAssertEqualWithAccuracy(CGRectGetMidX(toolsFrame), gapMidX, 1.0f);
+}
+
 @end

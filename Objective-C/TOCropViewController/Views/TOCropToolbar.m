@@ -102,8 +102,7 @@
     // Get the resource bundle depending on the framework/dependency manager we're using
     NSBundle *resourceBundle = TO_CROP_VIEW_RESOURCE_BUNDLE_FOR_OBJECT(self);
 
-    if (@available(iOS 26.0, *)) {
-    } else {
+    if (!TOCropViewUsesGlassDesign()) {
         _doneTextButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [_doneTextButton setTitle:_doneTextButtonTitle ? _doneTextButtonTitle : NSLocalizedStringFromTableInBundle(@"Done", @"TOCropViewControllerLocalizable", resourceBundle, nil)
                          forState:UIControlStateNormal];
@@ -134,8 +133,7 @@
     // Set the default color for the done buttons
     self.doneButtonColor = nil;
 
-    if (@available(iOS 26.0, *)) {
-    } else {
+    if (!TOCropViewUsesGlassDesign()) {
         _cancelTextButton = [UIButton buttonWithType:UIButtonTypeSystem];
 
         [_cancelTextButton setTitle:_cancelTextButtonTitle ? _cancelTextButtonTitle : NSLocalizedStringFromTableInBundle(@"Cancel", @"TOCropViewControllerLocalizable", resourceBundle, nil)
@@ -228,7 +226,7 @@
 
     if (verticalLayout == NO) {
         CGFloat insetPadding = 10.0f;
-        if (@available(iOS 26.0, *)) {
+        if (TOCropViewUsesGlassDesign()) {
             insetPadding = 0.0f;
         }
 
@@ -335,7 +333,7 @@
 - (void)layoutToolbarButtons:(NSArray<UIButton *> *)buttons withSameButtonSize:(CGSize)size inContainerRect:(CGRect)containerRect horizontally:(BOOL)horizontally {
     // With no buttons to hold, collapse the glass container instead of leaving an
     // empty capsule stranded at the frame it had when the last button was visible
-    if (@available(iOS 26.0, *)) {
+    if (TOCropViewUsesGlassDesign()) {
         _glassView.hidden = (buttons.count == 0);
     }
 
@@ -345,7 +343,7 @@
 
     const CGFloat buttonSize = 44.0f;
 
-    if (@available(iOS 26.0, *)) {
+    if (TOCropViewUsesGlassDesign()) {
         CGFloat glassPadding = 6.0f;
         CGFloat buttonPadding = 12.0f;
         CGFloat maxExtent = buttons.count * buttonSize + (buttonPadding * (buttons.count - 1)) + (glassPadding * 2.0f);
